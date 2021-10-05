@@ -14,6 +14,9 @@ public class SMS{
 	@JsonProperty("produtoId")
 	private Long produtoId;
 	
+	@JsonProperty("campanhaId")
+	private String campanhaId;
+	
 	@JsonProperty("smsId")
 	private String smsId;
 	
@@ -23,4 +26,7 @@ public class SMS{
 	@JsonProperty("mensagem")
 	private String mensagem;
 	
+	@JsonProperty("fornecedorId")
+	private Integer fornecedorId;
+
 }

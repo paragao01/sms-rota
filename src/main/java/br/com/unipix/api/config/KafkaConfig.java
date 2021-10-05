@@ -44,10 +44,5 @@ public class KafkaConfig {
 
         return concurrentKafkaListenerContainerFactory;
     }
-    
-    @Bean
-    public Gson jsonConverter(){
-        return new Gson();
-    }
 }
 	
