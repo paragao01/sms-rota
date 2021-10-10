@@ -26,7 +26,10 @@ public class SMS{
 	@JsonProperty("mensagem")
 	private String mensagem;
 	
+	@JsonProperty("rotaId")
+	private Long rotaId;
+
 	@JsonProperty("fornecedorId")
-	private Integer fornecedorId;
+	private Long fornecedorId;
 
 }

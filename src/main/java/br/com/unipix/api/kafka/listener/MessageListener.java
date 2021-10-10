@@ -9,10 +9,10 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 
 import br.com.unipix.api.model.SMS;
+import br.com.unipix.api.service.RotaService;
 
 @Component
 public class MessageListener {
@@ -23,22 +23,28 @@ public class MessageListener {
 	@Autowired
 	private RestTemplate restTemplate;
 
+	@Autowired
+	private Gson jsonConverter;
+
+	@Autowired
+	private RotaService rotaService;
+
 	@KafkaListener(topics = "sms")
 	public void getSMSFromKafka(String mensagem) {
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			String stringCortada = mensagem.substring(1, mensagem.length()-1);  
-			stringCortada =  stringCortada.replace("\\n", "").replace("\\t", "").replace("\\", "");
-			SMS sms = mapper.readValue(stringCortada, SMS.class);
-			System.out.println(sms);
-			sms.setFornecedorId(1);
-			enviarSMS(sms);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
+		System.out.println(mensagem);
+		SMS sms = (SMS) jsonConverter.fromJson(mensagem, SMS.class);
+		sms.setProdutoId(1L);
+		System.out.println(sms);
+		sms = rotaService.classificaFornecedorPorArea(sms);
+		if (sms.getFornecedorId() != null) {
+			enviarFornecedorSMS(sms);
+			System.out.println("sms enviado");
+		} else {
+			System.out.println("sms sem rota");
 		}
 	}
 	
-	public void enviarSMS(SMS sms) {
+	public void enviarFornecedorSMS(SMS sms) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Type", "application/json");
 		HttpEntity<?> request = new HttpEntity<Object>(sms, headers);

@@ -17,13 +17,13 @@ public class RotaFornecedor {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
-	private Integer id; 
+	private Long id; 
 	
 	@Column(name = "rota_id")
-	private Integer rota_id; 
+	private Long rota_id; 
 	
 	@Column(name = "fornecedor_id")
-	private Integer fornecedor_id; 
+	private Long fornecedor_id; 
 	
 	@Column(name = "probabilidade")
 	private Integer probabilidade;

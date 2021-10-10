@@ -2,6 +2,7 @@ package br.com.unipix.api.repository;
 
 public interface FornecedorPrefixo {
 
-	Integer getFornecedorId();
+	Long getFornecedorId();
+	Long getRotaId();
 	String getPrefixo();
 }

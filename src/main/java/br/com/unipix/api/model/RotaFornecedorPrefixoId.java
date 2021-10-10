@@ -12,6 +12,6 @@ public class RotaFornecedorPrefixoId implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private Integer tb_rota_fornecedor_id; 
+	private Long tb_rota_fornecedor_id; 
 	private String prefixo;
 }
