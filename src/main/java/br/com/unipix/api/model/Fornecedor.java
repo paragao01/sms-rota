@@ -13,7 +13,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "tb_fornecedor", catalog = "SMSHub")
+@Table(name = "tb_fornecedor", catalog = "unipix")
 public class Fornecedor implements Serializable {
 
 	private static final long serialVersionUID = 1L;

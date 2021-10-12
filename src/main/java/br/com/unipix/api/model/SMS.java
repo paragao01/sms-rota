@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class SMS{
+public class SMS {
 
 	@JsonProperty("produtoId")
 	private Long produtoId;

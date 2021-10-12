@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "tb_rota_fornecedor_prefixo", catalog = "SMSHub")
+@Table(name = "tb_rota_fornecedor_prefixo", catalog = "unipix")
 public class RotaFornecedorPrefixo {
 
     @EmbeddedId

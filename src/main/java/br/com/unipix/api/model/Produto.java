@@ -11,7 +11,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "tb_produto", catalog = "SMSHub")
+@Table(name = "tb_produto", catalog = "unipix")
 public class Produto {
 	
 	@Id

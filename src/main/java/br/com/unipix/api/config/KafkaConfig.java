@@ -32,7 +32,7 @@ public class KafkaConfig {
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, environment.getProperty("kafka.url"));
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        config.put(ConsumerConfig.GROUP_ID_CONFIG, "sms");
+        config.put(ConsumerConfig.GROUP_ID_CONFIG, "consumer");
         return new  DefaultKafkaConsumerFactory<>(config, new StringDeserializer(), new StringDeserializer());
     }
 
