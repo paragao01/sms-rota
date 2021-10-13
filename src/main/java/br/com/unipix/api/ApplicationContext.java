@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
 
+//@EnableEurekaClient 
 @SpringBootApplication
 public class ApplicationContext {
 
