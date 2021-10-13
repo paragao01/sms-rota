@@ -16,8 +16,9 @@ import org.springframework.web.client.RestTemplate;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import br.com.unipix.api.dto.input.SMSRequest;
 import br.com.unipix.api.dto.output.SMSResponse;
-import br.com.unipix.api.model.SMS;
+import br.com.unipix.api.kafka.producer.MessageProducer;
 import br.com.unipix.api.repository.FornecedorPrefixo;
 import br.com.unipix.api.repository.RotaRepository;
 
@@ -28,6 +29,9 @@ public class RotaService {
 	private String urlEnviaSMS;
 	
 	@Autowired
+	private MessageProducer messageProducer;
+	
+	@Autowired
 	private RotaRepository rotaRepository;
 
 	@Autowired
@@ -36,15 +40,15 @@ public class RotaService {
 	@Autowired
 	private Gson jsonConverter;
 
-	public SMS processarSMS(SMS sms) {
+	public SMSRequest processarSMS(SMSRequest sms) {
 		sms = classificaFornecedor(sms);
-		System.out.println(sms);
 		if (sms.getFornecedorId() != null) {
 			try {
 				List<SMSResponse> lista = enviarFornecedorSMS(sms);
-				System.out.println("sms enviado");
+				messageProducer.putToKafka(lista);
 			} catch (Exception e) {
-				System.out.println("sms sem rota");
+				e.printStackTrace();
+				System.out.println("erro");
 			}
 		} else {
 			System.out.println("sms sem rota");
@@ -52,7 +56,7 @@ public class RotaService {
 		return sms;
 	}
 	
-	public SMS classificaFornecedor(SMS sms) {
+	public SMSRequest classificaFornecedor(SMSRequest sms) {
 		List<FornecedorPrefixo> fornecedores = rotaRepository.obterFornecedorPorPrefixo(sms.getProdutoId(), sms.getFornecedorId());
 		if (fornecedores.size() > 0) {
 			FornecedorPrefixo fornecedorPrefixo = fornecedores.stream().filter(x -> sms.getNumero().substring(2,4).equals(x.getPrefixo())).findFirst().orElse(null);
@@ -64,7 +68,7 @@ public class RotaService {
         return sms;
 	}
 	
-	public List<SMSResponse> enviarFornecedorSMS(SMS sms) {
+	public List<SMSResponse> enviarFornecedorSMS(SMSRequest sms) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Type", "application/json");
 		HttpEntity<?> request = new HttpEntity<Object>(sms, headers);

@@ -1,4 +1,4 @@
-package br.com.unipix.api.model;
+package br.com.unipix.api.dto.input;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class SMS {
+public class SMSRequest {
 
 	@JsonProperty("produtoId")
 	private Long produtoId;
