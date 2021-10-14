@@ -5,4 +5,6 @@ public interface FornecedorPrefixo {
 	Long getFornecedorId();
 	Long getRotaId();
 	String getPrefixo();
+	String getOperadora();
+	Integer getPrioridade();
 }
